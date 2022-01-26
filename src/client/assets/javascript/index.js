@@ -78,9 +78,15 @@ async function handleCreateRace() {
 	// TODO - Get player_id and track_id from the store
 	const {player_id, track_id} = store;
 
+	// added at end, but if you don't select then it would proceed with creating the race anyway without an error.
+	if (!player_id || !track_id) {
+		console.log("The driver and track not selected.")
+		return alert("You must make your selections prior to starting the race.");
+	}
+
 	// const race = TODO - invoke the API call to create the race, then save the result
 	const race = await createRace(player_id, track_id);
-	console.log(race);
+	//console.log(race);
 
 	// TODO - update the store with the race id
 	// For the API to work properly, the race id should be race id - 1
@@ -101,7 +107,7 @@ async function handleCreateRace() {
 	await startRace(store.race_id)
 
 	// TODO - call the async function runRace
-	await runRace(store.race_id)
+	runRace(store.race_id)
 }
 
 function runRace(raceID) {
